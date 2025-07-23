@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Feliz Cumpleaños!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+
+    .pantalla-inicial {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .mensaje-bienvenida {
+      text-align: center;
+      color: white;
+      backdrop-filter: blur(8px);
+      padding: 40px;
+      border-radius: 20px;
+      border: 2px solid #ffffff55;
+      background-color: rgba(0,0,0,0.3);
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    .mensaje-bienvenida h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px #000;
+    }
+
+    .mensaje-bienvenida input {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin-bottom: 15px;
+      width: 250px;
+    }
+
+    .mensaje-bienvenida button {
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #e6007e;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .mensaje-bienvenida button:hover {
+      background-color: #ad005d;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .contenido {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .pergamino {
+      display: none;
+      width: 200px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 8px double #8b5a2b;
+      border-radius: 30px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      margin: 100px auto;
+      cursor: pointer;
+      transition: width 1.2s ease, height 1.2s ease;
+      overflow: hidden;
+      position: relative;
+      padding: 20px;
+    }
+
+    .pergamino.abierto {
+      width: 90%;
+      max-width: 800px;
+      height: 500px;
+    }
+
+    .mensaje-pergamino {
+      opacity: 0;
+      transition: opacity 1s ease 0.8s;
+      font-size: 1.05rem;
+      color: #4b2e05;
+      font-weight: bold;
+      line-height: 1.6;
+      text-align: justify;
+      background-color: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 15px;
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    .pergamino.abierto .mensaje-pergamino {
+      opacity: 1;
+    }
+
+    .indicacion {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 1rem;
+      color: #4b2e05;
+      font-weight: bold;
+      pointer-events: none;
+      animation: parpadeo 1s infinite;
+    }
+
+    .pergamino.abierto .indicacion {
+      display: none;
+    }
+
+    @keyframes parpadeo {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎥 VIDEO DE FONDO -->
+  <video autoplay muted loop id="video-fondo">
+    <source src="fondo.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+
+  <!-- 🔒 PANTALLA DE INICIO -->
+  <div class="pantalla-inicial" id="pantallaInicial">
+    <div class="mensaje-bienvenida">
+      <h1>✨ Introduce tu nombre para desbloquear el mensaje ✨</h1>
+      <input type="text" id="nombreInput" placeholder="Tu nombre aquí...">
+      <br>
+      <button onclick="desbloquearPergamino()">Entrar</button>
+    </div>
+  </div>
+
+  <!-- 🎁 CONTENIDO -->
+  <div class="contenido">
+    <div class="pergamino" onclick="abrirPergamino(this)" id="pergamino">
+      <div class="indicacion">✨ Haz clic aquí ✨</div>
+      <div class="mensaje-pergamino">
+        ¡Hola peque!<br><br>
+        Perdón por no estar presente en un día tan importante para ti. Quiero que sepas que siempre puedes contar conmigo.<br><br>
+        Tienes a tu tía, que a pesar de que a veces le haces renegar, ten presente que te quiere demasiado. Ella siempre va a estar para ti, así que cuídala y valórala.<br><br>
+        Te quiero, peque. Pásala bien con tus seres queridos. Te mando un fuerte abrazo y espero logres todo lo que te propongas.<br><br>
+        Eres un chico increíble, jamás cambies. Con lo poco que te conozco, te llegué a querer demasiado.<br><br>
+        Disfruta tu niñez, prueba distintos deportes y elige el que más te apasione. Sé que serás un chico lleno de virtudes y lograrás todo lo que te propongas.<br><br>
+        ¡Te voy a extrañar demasiado! Espero verte en algún momento.<br><br>
+        ¡Feliz cumple, peque!<br><br>
+        ¡TE QUIERO, HASTA PRONTO!
+      </div>
+    </div>
+
+    <!-- 🎶 MÚSICA -->
+    <audio autoplay loop>
+      <source src="demon.mp3" type="audio/mpeg">
+      Tu navegador no soporta el audio.
+    </audio>
+  </div>
+
+  <!-- 📜 SCRIPT -->
+  <script>
+    let accesoPermitido = false;
+
+    function desbloquearPergamino() {
+      const nombre = document.getElementById("nombreInput").value.trim();
+      if (nombre !== "") {
+        accesoPermitido = true;
+        document.getElementById("pantallaInicial").style.display = "none";
+        document.getElementById("pergamino").style.display = "block";
+      } else {
+        alert("Por favor, escribe tu nombre para continuar.");
+      }
+    }
+
+    function abrirPergamino(elemento) {
+      if (accesoPermitido) {
+        elemento.classList.toggle("abierto");
+      }
+    }
+  </script>
+</body>
+</html>
